@@ -3,3 +3,10 @@ target/
 *.log
 *.pid
 .DS_Store
+/scripts/
+/src/test/
+/docs/stage-1-progress.md
+/docs/stage-1-verification.md
+/docs/superpowers/
+/.idea/
+*.iml
