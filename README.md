@@ -1,6 +1,6 @@
-# RBAC 与 MySQL 学习项目（阶段 2）
+# RBAC 与 MySQL 学习项目（阶段四第一步）
 
-项目使用 Java 17、Spring Boot 3.5.15、Spring Security 6.5、JDBC 和 MySQL 8.4，展示 RBAC 七张核心表、关联约束和手动 JOIN。阶段2加入基于数据库用户表的表单登录、Session、CSRF 和身份查询；尚未实现角色或权限授权、菜单查询 API。菜单只表示导航数据，不能代替 API 权限检查。阶段说明见 [docs/stage-2/README.md](docs/stage-2/README.md)。
+项目使用 Java 17、Spring Boot 3.5.15、Spring Security 6.5、JDBC 和 MySQL 8.4，展示 RBAC 七张核心表、关联约束和手动 JOIN。当前已包含基于数据库用户表的表单登录、Session、CSRF、用户 API 权限控制，以及阶段四第一步的当前用户菜单查询。菜单只表示导航数据，不能代替 API 权限检查。阶段说明见 [阶段三](docs/stage-3/README.md) 和 [阶段四第一步](docs/stage-4/README.md)。
 
 图中灰色表示客户端、蓝色表示 Spring Security 框架、橙色表示项目代码、绿色表示成功路径、红色表示失败路径。点击图片可打开原尺寸图。
 
@@ -41,7 +41,7 @@ java -jar target/rbac-mysql-demo-0.1.0-SNAPSHOT.jar
 
 应用账号为 `piggy`，演示用户为 `alice` 和 `bob`，分别关联 `admin` 与 `reader` 角色。两位演示用户的登录密码均为 `960225`；数据库只保存 BCrypt 哈希。该密码仅用于本地学习，不可用于真实服务。演示用户登录密码与 MySQL 连接账号 `piggy` 的 `.env` 密码用途不同；本机示例中两者取值恰好相同。Navicat Premium Lite 可连接 `127.0.0.1:3307` 的 `rbac_mysql_demo`，密码查看本机 `.env`。
 
-在 Navicat 中运行 `db/verification.sql` 可查看用户→角色→权限和用户→角色→菜单 JOIN，并演示重复关系的 1062 复合主键错误及不存在外键目标的 1452 错误；失败操作后执行 `ROLLBACK`。用户已确认两种错误和回滚结果。SQL 初始化只在空数据卷首次启动时自动运行；已初始化数据库需要手动执行脚本，执行 `seed.sql` 前先执行 `schema.sql`。重复播种会补齐缺失的演示关联，不覆盖已有字段。
+在 Navicat 中运行 `db/verification.sql` 可查看用户→角色→权限和用户→角色→菜单 JOIN，并演示重复关系的 1062 复合主键错误及不存在外键目标的 1452 错误；失败操作后执行 `ROLLBACK`。用户已确认两种错误和回滚结果。SQL 初始化只在空数据卷首次启动时自动运行；已初始化数据库需要手动执行脚本，执行 `seed.sql` 前先执行 `schema.sql`。重复播种会补齐缺失的演示关联，不覆盖已有字段。`GET /api/menus` 每次请求从数据库读取当前用户菜单；阶段四第一步的手动 Postman 检查待执行，详见阶段说明。
 
 MySQL 容器停止后数据仍保留：
 
