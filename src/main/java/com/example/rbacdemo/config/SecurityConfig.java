@@ -25,7 +25,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/users").hasAuthority("user:read")
                         .requestMatchers(HttpMethod.POST, "/api/users").hasAuthority("user:create")
                         .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasAuthority("user:delete")
+                        .requestMatchers("/api/transactions/**").permitAll()
                         .anyRequest().authenticated())
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/transactions/**"))
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")

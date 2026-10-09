@@ -1,6 +1,6 @@
-# RBAC 与 MySQL 学习项目（阶段四第一步）
+# RBAC 与 MySQL 学习项目（阶段五第一步）
 
-项目使用 Java 17、Spring Boot 3.5.15、Spring Security 6.5、JDBC 和 MySQL 8.4，展示 RBAC 七张核心表、关联约束和手动 JOIN。当前已包含基于数据库用户表的表单登录、Session、CSRF、用户 API 权限控制，以及阶段四第一步的当前用户菜单查询。菜单只表示导航数据，不能代替 API 权限检查。阶段说明见 [阶段三](docs/stage-3/README.md) 和 [阶段四第一步](docs/stage-4/README.md)。
+项目使用 Java 17、Spring Boot 3.5.15、Spring Security 6.5、JDBC 和 MySQL 8.4，展示 RBAC 七张核心表、关联约束和手动 JOIN。当前已包含基于数据库用户表的表单登录、Session、CSRF、用户 API 权限控制、当前用户菜单查询，以及适用于本地独立学习、允许匿名请求的 A→B 事务演示。菜单只表示导航数据，不能代替 API 权限检查。阶段说明见 [阶段三](docs/stage-3/README.md)、[阶段四第一步](docs/stage-4/README.md) 和 [阶段五第一步](docs/stage-5/README.md)。
 
 图中灰色表示客户端、蓝色表示 Spring Security 框架、橙色表示项目代码、绿色表示成功路径、红色表示失败路径。点击图片可打开原尺寸图。
 
