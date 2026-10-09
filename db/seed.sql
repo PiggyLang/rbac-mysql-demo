@@ -18,12 +18,12 @@ SELECT 'users', 'User management', '/users', 10 WHERE NOT EXISTS (SELECT 1 FROM 
 INSERT INTO menu (code, name, path, sort_order)
 SELECT 'reports', 'Reports', '/reports', 20 WHERE NOT EXISTS (SELECT 1 FROM menu WHERE code = 'reports');
 
--- Demo password for both accounts: learn-only-demo. Change it for any real use.
+-- Demo password for both accounts: 960225. Change it for any real use.
 INSERT INTO `user` (username, password_hash, display_name)
-SELECT 'alice', '$2a$10$zJVCdoMqvK4OHw7N7XHctuGrTtsXEfgsLGEqVNdt8jlfMn2zjqunK', 'Alice'
+SELECT 'alice', '$2a$10$bBRro6tS1oDncXg1bpjgPORtfcpg/AuJawbskyD7E5g7kBpLAWxnW', 'Alice'
 WHERE NOT EXISTS (SELECT 1 FROM `user` WHERE username = 'alice');
 INSERT INTO `user` (username, password_hash, display_name)
-SELECT 'bob', '$2a$10$auqm2Yc.5hem/ljvu1GwDu1wkjAvY.el/U7ny5vZ0bnPwKawLWJtS', 'Bob'
+SELECT 'bob', '$2a$10$wJbVaXvS.3U5JZ9SDd5zM.VzGcBAjZKM3Wm806iWwUKEO10qth.Sq', 'Bob'
 WHERE NOT EXISTS (SELECT 1 FROM `user` WHERE username = 'bob');
 
 INSERT INTO user_role (user_id, role_id)

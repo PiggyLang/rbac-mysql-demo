@@ -1,6 +1,10 @@
-# RBAC 与 MySQL 学习项目（阶段 1）
+# RBAC 与 MySQL 学习项目（阶段 2）
 
-项目使用 Java 17、Spring Boot 3.5.15、JDBC 和 MySQL 8.4，展示 RBAC 七张核心表、关联约束和手动 JOIN。当前唯一 HTTP 接口是只读 `GET /api/db-check`；登录、服务端授权和菜单查询接口尚未实现。菜单只表示导航数据，不能代替 API 权限检查。
+项目使用 Java 17、Spring Boot 3.5.15、Spring Security 6.5、JDBC 和 MySQL 8.4，展示 RBAC 七张核心表、关联约束和手动 JOIN。阶段2加入基于数据库用户表的表单登录、Session、CSRF 和身份查询；尚未实现角色或权限授权、菜单查询 API。菜单只表示导航数据，不能代替 API 权限检查。阶段说明见 [docs/stage-2/README.md](docs/stage-2/README.md)。
+
+图中灰色表示客户端、蓝色表示 Spring Security 框架、橙色表示项目代码、绿色表示成功路径、红色表示失败路径。点击图片可打开原尺寸图。
+
+[![Spring Security 会话认证、CSRF 防护与请求处理流程](docs/assets/spring-security-session-csrf-flow.png)](docs/assets/spring-security-session-csrf-flow.png)
 
 ## 环境与启动
 
@@ -31,11 +35,11 @@ mvn package
 java -jar target/rbac-mysql-demo-0.1.0-SNAPSHOT.jar
 ```
 
-这里的环境变量必须在启动 Maven 或 Java 的 shell 中显式导出；Docker Compose 读取 `.env` 不会让独立的 Java 进程继承这些值。应用监听 `127.0.0.1:8082`，可访问 <http://127.0.0.1:8082/api/db-check> 查看连通性和七表计数。
+这里的环境变量必须在启动 Maven 或 Java 的 shell 中显式导出；Docker Compose 读取 `.env` 不会让独立的 Java 进程继承这些值。应用监听 `127.0.0.1:8082`。启动后先请求 <http://127.0.0.1:8082/api/csrf> 获取 CSRF token，再以 `alice` 或 `bob` 登录；登录后访问 <http://127.0.0.1:8082/api/db-check> 查看连通性和七表计数。接口操作步骤见阶段2说明。
 
 ## 数据库学习与人工验证
 
-应用账号为 `piggy`，演示用户为 `alice` 和 `bob`，分别关联 `admin` 与 `reader` 角色。学习演示密码为 `learn-only-demo`；数据库保存的是 BCrypt 哈希，不可将演示凭据用于真实服务。Navicat Premium Lite 可连接 `127.0.0.1:3307` 的 `rbac_mysql_demo`，密码查看本机 `.env`。
+应用账号为 `piggy`，演示用户为 `alice` 和 `bob`，分别关联 `admin` 与 `reader` 角色。两位演示用户的登录密码均为 `960225`；数据库只保存 BCrypt 哈希。该密码仅用于本地学习，不可用于真实服务。演示用户登录密码与 MySQL 连接账号 `piggy` 的 `.env` 密码用途不同；本机示例中两者取值恰好相同。Navicat Premium Lite 可连接 `127.0.0.1:3307` 的 `rbac_mysql_demo`，密码查看本机 `.env`。
 
 在 Navicat 中运行 `db/verification.sql` 可查看用户→角色→权限和用户→角色→菜单 JOIN，并演示重复关系的 1062 复合主键错误及不存在外键目标的 1452 错误；失败操作后执行 `ROLLBACK`。用户已确认两种错误和回滚结果。SQL 初始化只在空数据卷首次启动时自动运行；已初始化数据库需要手动执行脚本，执行 `seed.sql` 前先执行 `schema.sql`。重复播种会补齐缺失的演示关联，不覆盖已有字段。
 
